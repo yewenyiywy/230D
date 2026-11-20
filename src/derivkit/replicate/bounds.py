@@ -44,7 +44,7 @@ class Bounds:
         return self.lower.value - tol <= x <= self.upper.value + tol
 
 
-def _thresholds(strike: float, tick: float, strict: bool) -> tuple[float, float]:
+def tick_thresholds(strike: float, tick: float, strict: bool) -> tuple[float, float]:
     """(last price paying 0, first price paying 1) for an 'above' digital."""
     if tick <= 0:
         return strike, strike
@@ -59,7 +59,7 @@ def digital_above_bounds(
     chain: OptionChain, strike: float, tick: float = 0.0, strict: bool = True
 ) -> Bounds:
     """Bounds on a digital paying 1 if S_T > strike (``strict``) or S_T >= strike."""
-    last_zero, first_one = _thresholds(strike, tick, strict)
+    last_zero, first_one = tick_thresholds(strike, tick, strict)
     ks, bid, ask = chain.strikes, chain.call_bid, chain.call_ask
 
     upper = Bound(chain.df, None, None)  # a zero-coupon bond always dominates

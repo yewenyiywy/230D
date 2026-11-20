@@ -68,7 +68,7 @@ def test_costs_remove_the_edge():
         fair_value=0.60,
         bounds=BOUNDS,
         fee_per_contract=fee,
-        thresholds=Thresholds(hedge_cost=0.005),
+        thresholds=Thresholds(hedge_spread_cost=0.005),
     )
     assert sig.action is Action.NONE
 

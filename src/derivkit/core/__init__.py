@@ -13,6 +13,7 @@ from derivkit.core.payoffs import (
     Range,
     Spread,
     Vanilla,
+    payoff_from_record,
     payoff_type,
     payoff_value,
 )
@@ -31,6 +32,7 @@ __all__ = [
     "SettlementRule",
     "Spread",
     "Vanilla",
+    "payoff_from_record",
     "payoff_type",
     "payoff_value",
     "validate",

@@ -45,6 +45,9 @@ class Costs(_Strict):
     fees: Literal["by_date"] = "by_date"
     fill: Literal["cross_spread"] = "cross_spread"
     depth_cap: bool = True
+    target_fee_multiplier: float = 1.0  # per the venue's schedule for this series
+    hedge_fee_per_option: float = 0.0  # commission per listed option contract, USD
+    order_contracts: int = Field(default=100, gt=0)  # order size used for fee rounding
 
 
 class Splits(_Strict):

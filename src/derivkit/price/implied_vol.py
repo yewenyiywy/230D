@@ -2,13 +2,12 @@
 
 from __future__ import annotations
 
+import math
 from typing import cast
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 from scipy.optimize import brentq
-
-from derivkit.price.black import black_price
 
 VOL_LO, VOL_HI = 1e-6, 10.0
 
@@ -52,9 +51,23 @@ def _one(price: float, f: float, k: float, t: float, df: float, call: bool) -> f
         return np.nan
 
     def err(sigma: float) -> float:
-        return float(black_price(f, k, t, sigma, df, call)) - price
+        return _black_scalar(f, k, t, sigma, df, call) - price
 
     lo, hi = err(VOL_LO), err(VOL_HI)
     if lo > 0 or hi < 0:
         return np.nan
     return cast(float, brentq(err, VOL_LO, VOL_HI, xtol=1e-12, maxiter=200))
+
+
+def _ncdf(x: float) -> float:
+    return 0.5 * math.erfc(-x / math.sqrt(2.0))
+
+
+def _black_scalar(f: float, k: float, t: float, sigma: float, df: float, call: bool) -> float:
+    """Scalar Black-76 for the root finder (same formula as ``black_price``, no numpy)."""
+    vol_t = sigma * math.sqrt(t)
+    d1 = (math.log(f / k) + 0.5 * vol_t * vol_t) / vol_t
+    d2 = d1 - vol_t
+    if call:
+        return df * (f * _ncdf(d1) - k * _ncdf(d2))
+    return df * (k * _ncdf(-d2) - f * _ncdf(-d1))
