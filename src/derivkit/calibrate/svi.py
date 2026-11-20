@@ -104,6 +104,7 @@ def fit_svi(
         return np.append(wt * (model - w_obs), penalty)
 
     rng = np.random.default_rng(seed)
+    exact_cost = 1e-14 * k_.size
     best: tuple[float, F64] | None = None
     for i in range(n_starts):
         x0 = (
@@ -112,11 +113,13 @@ def fit_svi(
             else lo + rng.random(5) * (hi - lo)
         )
         res = least_squares(
-            resid, np.clip(x0, lo, hi), bounds=(lo, hi), xtol=1e-14, ftol=1e-14, gtol=1e-14
+            resid, np.clip(x0, lo, hi), bounds=(lo, hi), xtol=1e-12, ftol=1e-12, gtol=1e-12
         )
         cost = float(res.cost)
         if best is None or cost < best[0]:
             best = (cost, res.x)
+        if best[0] < exact_cost:  # an essentially exact fit; more starts cannot improve it
+            break
     assert best is not None
     a, b, rho, m, s = best[1]
     return SVI(float(a * scale), float(b * scale), float(rho), float(m), float(s), float(t))

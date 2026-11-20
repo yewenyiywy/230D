@@ -106,3 +106,21 @@ def payoff_type(payoff: Payoff) -> str:
         case Spread():
             return "spread"
     raise TypeError(f"Unknown payoff {payoff!r}")
+
+
+def payoff_from_record(kind: str, strike: float | None, strike_upper: float | None) -> Payoff:
+    """Inverse of ``payoff_type`` for single-leg payoffs stored in the ``instruments`` table."""
+
+    def num(x: float | None) -> float | None:
+        return None if x is None or (isinstance(x, float) and np.isnan(x)) else float(x)
+
+    k, k_hi = num(strike), num(strike_upper)
+    if kind in ("call", "put") and k is not None:
+        return Vanilla(OptionType(kind), k)
+    if kind == "digital_above" and k is not None:
+        return Digital(k, above=True)
+    if kind == "digital_below" and k is not None:
+        return Digital(k, above=False)
+    if kind == "range":
+        return Range(k, k_hi)
+    raise ValueError(f"Cannot rebuild payoff {kind!r} with strikes {strike}, {strike_upper}")

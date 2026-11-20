@@ -28,7 +28,11 @@ in use. Moving to a new venue means writing one adapter that passes
 | `costs` | Kalshi fee formula by date; Deribit and per-contract fee models | done (Deribit parameters to verify) |
 | `strategy` | Two-tier entry rule: outside bounds (tier 1) or beyond model fair value (tier 2) | done |
 | `config` | Pair config schema and loader | done |
-| `hedge`, `backtest`, `evaluate` | Hedging, walk-forward backtest with P&L attribution, holdout metrics | next |
+| `market` | Forward and discount factor from put-call parity; SVI on out-of-the-money mids with a positive bid | done |
+| `hedge` | Static hedges: the bounding spread (tier 1) or the strikes either side (tier 2) | done; dynamic delta hedge next |
+| `backtest` | Event-driven engine, hold to expiry, exact P&L attribution (edge, fees, hedge spread, commissions, pin, basis) | done |
+| `evaluate` | Net P&L, hit rate, Sharpe, drawdown, block bootstrap by settlement date, walk-forward folds and a locked holdout | done |
+| `cli` | `derivkit backtest CONFIG --data DIR` (development period by default; `--open-holdout` once at the end) | done |
 | Monte Carlo, PDE, Deep BSDE engines | Pricing for path-dependent and multi-asset payoffs | later |
 
 ## Getting started
@@ -56,6 +60,29 @@ fair = svi_digital(7399.9999, F, svi, df)  # "7,400 or above"
 bounds = digital_above_bounds(chain, 7399.9999, tick=0.01)  # S&P prints to the cent
 print(bounds.lower.value, fair, bounds.upper.value)
 ```
+
+## Running a backtest
+
+Put standard-table CSVs for both legs (`instruments.csv`, `quotes.csv`, `settlements.csv`)
+in one folder, then:
+
+```bash
+uv run derivkit backtest configs/pairs/spx_daily_digitals.yaml --data data/spx --out results/spx
+```
+
+This writes `trades_development.csv` and `summary_development.json`. Every trade's P&L
+splits exactly into
+
+| Part | Meaning |
+| --- | --- |
+| `edge` | fair value minus entry price (signed) |
+| `target_fee` | target venue fee |
+| `hedge_spread` | cost of crossing the hedge's bid/ask |
+| `hedge_fees` | option commissions |
+| `pin` | hedged book's payoff at the target's settlement price minus its entry value |
+| `basis` | hedge settled on a different price than the target |
+
+The last 20% of decision dates are a holdout that runs only with `--open-holdout`.
 
 ## Conventions
 

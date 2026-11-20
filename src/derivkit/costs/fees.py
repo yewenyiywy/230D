@@ -12,6 +12,7 @@ import math
 from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import date
+from typing import TypeVar
 
 
 def ceil_cent(x: float) -> float:
@@ -60,9 +61,10 @@ class PerContractFee:
 
 
 Fee = KalshiFee | DeribitOptionFee | PerContractFee
+F = TypeVar("F", KalshiFee, DeribitOptionFee, PerContractFee)
 
 
-def fee_in_force(schedule: Sequence[Fee], on: date) -> Fee:
+def fee_in_force(schedule: Sequence[F], on: date) -> F:
     """The latest schedule entry whose ``effective_from`` is on or before ``on``."""
     eligible = [f for f in schedule if f.effective_from <= on]
     if not eligible:

@@ -5,7 +5,7 @@ target:
   series: [KXINXU, KXINX]
 hedge:
   adapter: optionmetrics
-  roots: [SPXW, XSP]
+  roots: [SPXW]                 # XSP (one-tenth size) needs its strikes scaled x10; later
 match:
   expiry: same_close
   max_time_skew_seconds: 0      # end-of-day history; use 5 for live snapshots
