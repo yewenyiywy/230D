@@ -1,0 +1,55 @@
+{
+  "book_summary": [
+    {
+      "instrument_name": "BTC-21NOV26-92000-C",
+      "bid_price": 0.0105,
+      "ask_price": 0.0115,
+      "mark_price": 0.011,
+      "underlying_price": 92050.5,
+      "underlying_index": "SYN.BTC-21NOV26",
+      "estimated_delivery_price": 92000.0,
+      "creation_timestamp": 1795680000000
+    },
+    {
+      "instrument_name": "BTC-21NOV26-93000-C",
+      "bid_price": 0.0060,
+      "ask_price": null,
+      "mark_price": 0.0065,
+      "underlying_price": 92050.5,
+      "underlying_index": "SYN.BTC-21NOV26",
+      "estimated_delivery_price": 92000.0,
+      "creation_timestamp": 1795680000000
+    },
+    {
+      "instrument_name": "BTC_USDC-21NOV26-90000-P",
+      "bid_price": 410.0,
+      "ask_price": 430.0,
+      "underlying_price": 92050.5,
+      "underlying_index": "SYN.BTC_USDC-21NOV26",
+      "estimated_delivery_price": 92000.0,
+      "creation_timestamp": 1795680000000
+    },
+    {
+      "instrument_name": "BTC-PERPETUAL",
+      "bid_price": 92010.0,
+      "ask_price": 92011.0,
+      "estimated_delivery_price": 92000.0,
+      "creation_timestamp": 1795680000000
+    }
+  ],
+  "trades": [
+    {
+      "trade_id": "ETH-1",
+      "instrument_name": "BTC-21NOV26-92000-C",
+      "price": 0.011,
+      "amount": 1.5,
+      "direction": "buy",
+      "index_price": 91990.0,
+      "timestamp": 1795680005000
+    }
+  ],
+  "deliveries": [
+    {"instrument_name": "BTC-21NOV26-92000-C", "delivery_price": 92500.0},
+    {"instrument_name": "BTC_USDC-21NOV26-90000-P", "delivery_price": 92500.0}
+  ]
+}
