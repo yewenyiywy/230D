@@ -52,8 +52,8 @@ iv = implied_vol((chain.call_bid + chain.call_ask) / 2, F, chain.strikes, t, df)
 ok = np.isfinite(iv)
 svi = fit_svi(np.log(chain.strikes[ok] / F), iv[ok], t)
 
-fair = svi_digital(7399.9999, F, svi, df)                    # "7,400 or above"
-bounds = digital_above_bounds(chain, 7399.9999, tick=0.01)    # S&P prints to the cent
+fair = svi_digital(7399.9999, F, svi, df)  # "7,400 or above"
+bounds = digital_above_bounds(chain, 7399.9999, tick=0.01)  # S&P prints to the cent
 print(bounds.lower.value, fair, bounds.upper.value)
 ```
 
