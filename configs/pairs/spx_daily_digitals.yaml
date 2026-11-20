@@ -1,0 +1,27 @@
+# Kalshi daily S&P 500 contracts hedged with SPXW / XSP options that settle on the same close.
+pair: spx_daily_digitals
+target:
+  adapter: kalshi
+  series: [KXINXU, KXINX]
+hedge:
+  adapter: optionmetrics
+  roots: [SPXW, XSP]
+match:
+  expiry: same_close
+  max_time_skew_seconds: 0      # end-of-day history; use 5 for live snapshots
+pricing:
+  calibrator: svi
+  digital_engine: smile_consistent
+  underlying_tick: 0.01         # the index prints to the cent
+strategy:
+  tiers: [bounds, model]
+  hold: to_expiry
+  basis_buffer: 0.0             # same close on both sides; checked per settlement
+  min_edge: 0.0
+costs:
+  fees: by_date
+  fill: cross_spread
+  depth_cap: true
+splits:
+  scheme: walk_forward
+  holdout_fraction: 0.2

@@ -1,0 +1,28 @@
+# Kalshi hourly BTC contracts settling at 08:00 UTC, hedged with Deribit daily options.
+# Settlement differs (BRTI 60s trimmed mean vs Deribit index 30-min TWAP): basis is measured.
+pair: btc_0800_digitals
+target:
+  adapter: kalshi
+  series: [KXBTCD]
+hedge:
+  adapter: deribit
+match:
+  expiry: same_timestamp
+  max_time_skew_seconds: 5
+  settlement_hour_utc: 8
+pricing:
+  calibrator: svi
+  digital_engine: smile_consistent
+  underlying_tick: 0.01
+strategy:
+  tiers: [bounds, model]
+  hold: to_expiry
+  basis_buffer: measured
+  min_edge: 0.0
+costs:
+  fees: by_date
+  fill: cross_spread
+  depth_cap: true
+splits:
+  scheme: walk_forward
+  holdout_fraction: 0.2

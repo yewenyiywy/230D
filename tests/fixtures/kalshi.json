@@ -1,0 +1,73 @@
+{
+  "markets": [
+    {
+      "ticker": "KXINXU-26NOV20H1600-T7399.9999",
+      "event_ticker": "KXINXU-26NOV20H1600",
+      "strike_type": "greater",
+      "floor_strike": 7399.9999,
+      "close_time": "2026-11-20T21:00:00Z",
+      "status": "finalized",
+      "result": "yes",
+      "expiration_value": "7412.35",
+      "yes_bid_dollars": "0.9900",
+      "yes_ask_dollars": "1.0000"
+    },
+    {
+      "ticker": "KXINX-26NOV20H1600-B7412",
+      "event_ticker": "KXINX-26NOV20H1600",
+      "strike_type": "between",
+      "floor_strike": 7400,
+      "cap_strike": 7424.9999,
+      "close_time": "2026-11-20T21:00:00Z",
+      "status": "finalized",
+      "result": "yes",
+      "expiration_value": "7412.35"
+    },
+    {
+      "ticker": "KXBTCD-26NOV2003-T91999.99",
+      "event_ticker": "KXBTCD-26NOV2003",
+      "strike_type": "greater",
+      "floor_strike": 91999.99,
+      "close_time": "2026-11-20T08:00:00Z",
+      "status": "active",
+      "result": ""
+    }
+  ],
+  "candlesticks": {
+    "KXINXU-26NOV20H1600-T7399.9999": [
+      {
+        "end_period_ts": 1795716000,
+        "yes_bid": {"open_dollars": "0.6000", "low_dollars": "0.5800", "high_dollars": "0.6200", "close_dollars": "0.6100"},
+        "yes_ask": {"open_dollars": "0.6300", "low_dollars": "0.6200", "high_dollars": "0.6500", "close_dollars": "0.6400"},
+        "price": {"close_dollars": "0.6200"},
+        "volume_fp": "120.00",
+        "open_interest_fp": "900.00"
+      },
+      {
+        "end_period_ts": 1795716060,
+        "yes_bid": {"open": 61, "low": 60, "high": 62, "close": 62},
+        "yes_ask": {"open": 64, "low": 63, "high": 65, "close": 65},
+        "price": {"close": 63}
+      }
+    ]
+  },
+  "trades": [
+    {
+      "trade_id": "a1b2",
+      "ticker": "KXINXU-26NOV20H1600-T7399.9999",
+      "count": 25,
+      "yes_price": 62,
+      "no_price": 38,
+      "taker_side": "yes",
+      "created_time": "2026-11-20T15:30:12.123Z"
+    },
+    {
+      "trade_id": "c3d4",
+      "ticker": "KXINXU-26NOV20H1600-T7399.9999",
+      "count_fp": "10.00",
+      "yes_price_dollars": "0.6100",
+      "taker_side": "no",
+      "created_time": "2026-11-20T15:31:00Z"
+    }
+  ]
+}
